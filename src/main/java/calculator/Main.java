@@ -10,12 +10,34 @@ public class Main {
         read();
     }
 
-    private static int sum(String[] array) {
-        int sum = 0;
-        for (String str : array) {
-            sum += Integer.parseInt(str);
+    private static int result(String[] array) {
+        int result = Integer.parseInt(array[0]);
+        int tmp = 0;
+        for (int i = 1; i < array.length; i++) {
+            if (i % 2 == 0) {
+                tmp = Integer.parseInt(array[i]);
+                String sign = action(array[i - 1]);
+                switch (sign) {
+                    case "+": result += tmp;
+                        break;
+                    case "-": result -= tmp;
+                        break;
+                }
+
+            }
         }
-        return sum;
+        return result;
+    }
+
+    private static String action(String str) {
+        String plus = "\\++";
+        String minus = "\\-+";
+
+        if (str.matches(plus)) {
+            return "+";
+        } else {
+            return str.length() % 2 == 0 ? "+" : "-";
+        }
     }
 
     private static void read() {
@@ -32,7 +54,7 @@ public class Main {
             } else if (line.length == 1) {
                 System.out.println(Integer.parseInt(line[0]));
             } else {
-                System.out.println(sum(line));
+                System.out.println(result(line));
             }
         }
     }
